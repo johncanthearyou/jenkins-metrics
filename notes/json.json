@@ -1,0 +1,87 @@
+{
+    "_links": {
+        "self": {
+            "href": "/job/pipeline-1/10/wfapi/describe"
+        }
+    },
+    "id": "10",
+    "name": "#10",
+    "status": "SUCCESS",
+    "startTimeMillis": 1708205512397,
+    "endTimeMillis": 1708205534126,
+    "durationMillis": 21729,
+    "queueDurationMillis": 22,
+    "pauseDurationMillis": 0,
+    "stages": [
+        {
+            "_links": {
+                "self": {
+                    "href": "/job/pipeline-1/10/execution/node/14/wfapi/describe"
+                }
+            },
+            "id": "14",
+            "name": "Stage 1",
+            "execNode": "",
+            "status": "SUCCESS",
+            "startTimeMillis": 1708205512635,
+            "durationMillis": 12287,
+            "pauseDurationMillis": 0
+        },
+        {
+            "_links": {
+                "self": {
+                    "href": "/job/pipeline-1/10/execution/node/16/wfapi/describe"
+                }
+            },
+            "id": "16",
+            "name": "Stage 2",
+            "execNode": "",
+            "status": "SUCCESS",
+            "startTimeMillis": 1708205512694,
+            "durationMillis": 8233,
+            "pauseDurationMillis": 0
+        },
+        {
+            "_links": {
+                "self": {
+                    "href": "/job/pipeline-1/10/execution/node/18/wfapi/describe"
+                }
+            },
+            "id": "18",
+            "name": "Stage 3",
+            "execNode": "",
+            "status": "SUCCESS",
+            "startTimeMillis": 1708205512755,
+            "durationMillis": 14198,
+            "pauseDurationMillis": 0
+        },
+        {
+            "_links": {
+                "self": {
+                    "href": "/job/pipeline-1/10/execution/node/20/wfapi/describe"
+                }
+            },
+            "id": "20",
+            "name": "Stage 4",
+            "execNode": "",
+            "status": "SUCCESS",
+            "startTimeMillis": 1708205512795,
+            "durationMillis": 21186,
+            "pauseDurationMillis": 0
+        },
+        {
+            "_links": {
+                "self": {
+                    "href": "/job/pipeline-1/10/execution/node/22/wfapi/describe"
+                }
+            },
+            "id": "22",
+            "name": "Stage 5",
+            "execNode": "",
+            "status": "SUCCESS",
+            "startTimeMillis": 1708205512828,
+            "durationMillis": 4188,
+            "pauseDurationMillis": 0
+        }
+    ]
+}
