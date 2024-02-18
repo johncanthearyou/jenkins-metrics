@@ -1,1 +1,6 @@
-fastapi[all]
+python-dotenv
+fastapi
+numpy
+requests
+pymongo
+uvicorn
