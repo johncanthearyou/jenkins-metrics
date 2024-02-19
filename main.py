@@ -72,11 +72,6 @@ def update_build_metrics(job, build):
 
 @app.get("/build/{build}/job/{job:path}")
 def get_build_metrics(job, build):
-    print("")
-    print("")
-    print(f"{job}#{build}")
-    print("")
-    print("")
     build_data = metrics_jobs.find_one({"id": f"{job}#{build}"}, projection={'_id': False})
     return build_data
 
