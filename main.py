@@ -72,7 +72,7 @@ def update_all_metrics():
         for build in job["builds"]:
             ingested_builds += [update_build_metrics(job["name"], build["number"])["id"]]
 
-    # return ingested_builds
+    return ingested_builds
 
 def get_jobs(root_folder=""):
     url = env['JENKINS_URL']
@@ -85,11 +85,11 @@ def get_jobs(root_folder=""):
     )
     all_jobs = json_util.loads(response.content)["jobs"]
     
+    pipeline_jobs = []
     just_jobs = filter(
         lambda job: job["_class"] == "org.jenkinsci.plugins.workflow.job.WorkflowJob",
         all_jobs
     )
-    pipeline_jobs = []
     for job in just_jobs:
         if root_folder == "":
             job["name"] = job['name']
