@@ -21,10 +21,19 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-
 @app.get("/")
 def get_jobs():
     return metrics_jobs.distinct("job")
+
+@app.post("/")
+def update_all_metrics():
+    jobs = get_jobs()
+    ingested_builds = []
+    for job in jobs:
+        for build in job["builds"]:
+            ingested_builds += [update_build_metrics(job["name"], build["number"])["id"]]
+
+    return ingested_builds
 
 @app.get("/job/{job:path}")
 def get_job_metrics(job:str):
@@ -39,15 +48,11 @@ def get_job_metrics(job:str):
         "builds": list(reversed(build_entries))
     }
 
-@app.get("/job/{job}/build/{build}")
-def get_build_metrics(job, build):
-    return metrics_jobs.find_one({"id": f"{job}#{build}"})
-
-@app.post("/job/{job}/build/{build}")
+@app.post("/build/{build}/job/{job:path}")
 def update_build_metrics(job, build):
     response = requests.get(
         url=f"{env['JENKINS_URL']}/job/{job.replace("/", "/job/")}/{build}/wfapi",
-        auth=HTTPBasicAuth(env["USER"], env["PASS"])
+        auth=HTTPBasicAuth(env["JENKINS_USER"], env["JENKINS_TOKEN"])
     )
     build_metrics = json_util.loads(response.content)
     build_metrics["job"] = job
@@ -64,15 +69,12 @@ def update_build_metrics(job, build):
 
     return build_metrics
 
-@app.post("/")
-def update_all_metrics():
-    jobs = get_jobs()
-    ingested_builds = []
-    for job in jobs:
-        for build in job["builds"]:
-            ingested_builds += [update_build_metrics(job["name"], build["number"])["id"]]
 
-    return ingested_builds
+@app.get("/build/{build}/job/{job:path}")
+def get_build_metrics(job, build):
+    build_data = metrics_jobs.find_one({"id": f"{job}#{build}"}, projection={'_id': False})
+    return build_data
+
 
 def get_jobs(root_folder=""):
     url = env['JENKINS_URL']
@@ -81,7 +83,7 @@ def get_jobs(root_folder=""):
     url += f"{root_folder.replace("/", "/job/")}/api/json?tree=jobs[name,builds[number]]"
     response = requests.get(
         url=url,
-        auth=HTTPBasicAuth(env["USER"], env["PASS"])
+        auth=HTTPBasicAuth(env["JENKINS_USER"], env["JENKINS_TOKEN"])
     )
     all_jobs = json_util.loads(response.content)["jobs"]
     
