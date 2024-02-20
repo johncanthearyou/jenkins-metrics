@@ -3,4 +3,5 @@ fastapi
 numpy
 requests
 pymongo
+pyodbc
 uvicorn

@@ -4,10 +4,11 @@ from fastapi.middleware.cors import CORSMiddleware
 import json as json_util
 import numpy
 import pymongo
+import mssql
 import requests
 from requests.auth import HTTPBasicAuth
 
-
+db_connection = mssql.connect()
 env = dotenv_values(".env")
 metrics_db = pymongo.MongoClient(env['MONGO_CONNECTION'])["jenkins-metrics"]
 metrics_jobs = metrics_db["jobs"]
